@@ -1,0 +1,82 @@
+.app_bg{
+    background-color: rgb(237,237,237)!important;
+}
+
+.printContainer{
+  margin: 0 auto;
+  width: 210mm;       /* Lebar kertas A4 */
+  height: 297mm; 
+  /* border: 1px solid #000;   */
+  transform-origin: top left; /* Pastikan skala dimulai dari sudut kiri atas */
+  transform: scale(var(--scale, 1)); /* Default scale 1 */
+  transition: transform 0.2s ease;
+}
+
+@media (max-width: 768px) {
+  .printContainer {
+    transform: scale(0.76); /* Ukuran lebih kecil untuk layar kecil */
+  }
+}
+
+.nField{
+  width: 200px!important;
+}
+
+#printMe{     
+    margin: 0 auto;     /* Membuat elemen terpusat secara horizontal */
+    padding-left: 5px;
+    padding-right: 5px;    /* Padding untuk memberi ruang di dalam elemen */
+    box-sizing: border-box;  /* Padding dan border termasuk dalam ukuran elemen */
+    background-color: #fff;  /* Latar belakang putih agar terlihat seperti kertas */
+}
+
+.swal-custom-zindex {
+    z-index: 2500 !important;
+  }
+
+  .reportContainer {
+    width: 210mm;       /* Lebar kertas A4 */
+    height: 297mm;      /* Tinggi kertas A4 */
+    margin: 0 auto;     /* Membuat elemen terpusat secara horizontal */
+    padding: 20px;      /* Padding untuk memberi ruang di dalam elemen */
+    border: 1px solid #000;  /* Garis tepi untuk membedakan elemen */
+    box-sizing: border-box;  /* Padding dan border termasuk dalam ukuran elemen */
+    background-color: #fff;  /* Latar belakang putih agar terlihat seperti kertas */
+  }
+
+  .pir-container {
+    margin: 20px auto;
+    padding: 20px;
+  }
+
+  .pir-table{
+    font-size: 10px;
+    border-collapse: collapse;
+    border: 1px solid #000;
+    text-wrap: wrap;
+  }
+
+  .pir-table td{
+    padding: 3px;
+  }
+
+  .top-border{
+    border-top: black solid 1px;
+  }
+  .y-border{
+    border-top: black solid 1px;
+    border-bottom: black solid 1px;
+  }
+
+  .border-right{
+    border-right: black solid 1px;
+  }
+
+  .verticalText{
+    font-size: 11px;
+    writing-mode: vertical-lr; 
+  }
+
+  .isiInpsection td{
+    text-align: start!important;
+  }
