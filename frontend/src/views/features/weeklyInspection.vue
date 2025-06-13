@@ -20,7 +20,6 @@
       <v-card-text>
         <v-divider class="mb-3"></v-divider>
         <v-data-table items-per-page="25" :items="tools" :search="search">
-          <template v-slot:top>defaultcontent</template>
           <template v-slot:headers="{ props }">
             <tr>
               <th rowspan="2">Tool Name</th>

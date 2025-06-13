@@ -55,7 +55,7 @@ SQL_PATH=${SQL_PATH}
     console.log("✅ File .env untuk backend berhasil dibuat.");
 
     // 3. Buat file .env di frontend
-    const frontendEnvContent = `VITE_API_SERVER=https://${LOCAL_IP}
+    const frontendEnvContent = `VITE_API_SERVER=http://${LOCAL_IP}
 VITE_API_PORT=${LOCAL_PORT}
 `;
 

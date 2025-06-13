@@ -59,10 +59,6 @@
           >
             <v-icon color="error">mdi-delete</v-icon>
           </v-btn>
-
-          <v-btn flat icon color="transparent">
-            <v-icon color="primary">mdi-view-dashboard</v-icon>
-          </v-btn>
         </template>
       </v-data-table>
     </v-card-text>
