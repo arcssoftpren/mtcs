@@ -1,6 +1,6 @@
 <template>
   <router-view />
-  <v-dialog
+  <!-- <v-dialog
     v-model="preload"
     scrollable
     fullscreen
@@ -21,12 +21,12 @@
           color="primary"
         >
           <template v-slot:default>
-            <v-img width="250" src="./assets/softpren.png"
-          /></template>
+            <v-img width="250" src="./assets/softpren.png" />
+          </template>
         </v-progress-circular>
       </v-container>
     </v-card>
-  </v-dialog>
+  </v-dialog> -->
 </template>
 
 <script setup>

@@ -42,7 +42,7 @@
                 </v-chip>
                 <v-badge
                   @click="
-                    reportView(
+                    reportInit(
                       getResult(day, method.methodId, item.checkId).reports
                     )
                   "
@@ -72,7 +72,7 @@
       >
     </v-card-text>
   </v-card>
-  <v-dialog
+  <!-- <v-dialog
     v-model="reportsDialog"
     scrollable
     persistent=""
@@ -94,7 +94,6 @@
           cellpadding="5"
         >
           <tbody>
-            <!-- 1 -->
             <tr>
               <td
                 colspan="6"
@@ -134,7 +133,6 @@
             <tr>
               <td colspan="8" height="8" style="padding: 0 !important"></td>
             </tr>
-            <!-- 2 -->
             <tr>
               <td width="100" height="100" rowspan="4" class="text-start">
                 Deteksi Abnormal Process
@@ -370,6 +368,61 @@
         </table>
       </v-card-text>
     </v-card>
+  </v-dialog> -->
+
+  <v-dialog
+    v-model="reportDialog"
+    scrollable
+    persistent
+    :overlay="false"
+    transition="dialog-transition"
+  >
+    <v-card title="Abnormal Report">
+      <template v-slot:append>
+        <v-btn flat icon @click="reportDialog = false">
+          <v-icon>mdi-close</v-icon>
+        </v-btn>
+      </template>
+      <v-card-text>
+        <v-table>
+          <thead>
+            <tr>
+              <th>Nama Tool</th>
+              <th>:</th>
+              <th>{{ report.toolName }}</th>
+              <th>Nomor Registrasi</th>
+              <th>:</th>
+              <th>{{ report.regNumber }}</th>
+            </tr>
+            <tr>
+              <th>Tanggal Temuan</th>
+              <th>:</th>
+              <th>{{ moment(report.findingDate).format("DD/MM/YYYY") }}</th>
+
+              <th>User</th>
+              <th>:</th>
+              <th>{{ report.userDiv }}</th>
+            </tr>
+
+            <tr>
+              <th>Temuan Abnormal</th>
+              <th>:</th>
+              <th colspan="4">{{ report.abnormalDetail }}</th>
+            </tr>
+            <tr>
+              <th>Penyebab</th>
+              <th>:</th>
+              <th colspan="4">{{ report.cause }}</th>
+            </tr>
+            <tr>
+              <th>Penanggulangan</th>
+              <th>:</th>
+              <th colspan="4">{{ report.countermeasure }}</th>
+            </tr>
+          </thead>
+        </v-table>
+      </v-card-text>
+    </v-card>
   </v-dialog>
 </template>
 <style scoped>
@@ -394,13 +447,13 @@ import moment from "moment";
 const props = defineProps(["insData", "closeModal", "week"]);
 const store = useAppStore();
 const checkData = props.insData.instData;
-const reportsDialog = ref(false);
+const reportDialog = ref(false);
 const report = ref({});
 const userImageUrl = ref([]);
 
-const reportView = (r) => {
-  report.value = r;
-  reportsDialog.value = true;
+const reportInit = (r) => {
+  report.value = r[0];
+  reportDialog.value = true;
 };
 
 const getSign = (userId) => {

@@ -19,5 +19,6 @@ router.post("/getmonthlyreports", controller.getMonthlyReports);
 router.post("/monthlyinspection", inspection.monthlyInit);
 router.post("/monthlysign", inspection.monthlySign);
 router.post("/abnormals", controller.getAbnormality);
+router.post("/inidvidualreport", controller.getindividualreport);
 
 module.exports = router;

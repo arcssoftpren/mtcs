@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 13 Jun 2025 pada 01.26
+-- Waktu pembuatan: 13 Jun 2025 pada 09.15
 -- Versi server: 10.4.32-MariaDB
 -- Versi PHP: 8.2.12
 
@@ -20,6 +20,28 @@ SET time_zone = "+00:00";
 --
 -- Database: `mtcs_softpren`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `access`
+--
+
+CREATE TABLE `access` (
+  `code` varchar(8) NOT NULL,
+  `rights` varchar(255) NOT NULL,
+  `setups` varchar(255) NOT NULL,
+  `configs` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data untuk tabel `access`
+--
+
+INSERT INTO `access` (`code`, `rights`, `setups`, `configs`) VALUES
+('1-1', '[\"/home/weekly\",\"/home/daily\",\"/home/monthly\"]', '[\"rankManager\",\"typeManager\",\"toolManager\"]', '[\"roleManager\",\"accountManager\",\"accessManager\",\"divisionManager\"]'),
+('1-5', '[\"/home/weekly\",\"/home/monthly\"]', '', ''),
+('2-5', '[\"/home/daily\"]', '', '');
 
 -- --------------------------------------------------------
 
@@ -166,7 +188,8 @@ CREATE TABLE `t_abnormalreports` (
 
 INSERT INTO `t_abnormalreports` (`reportId`, `abnormalDetail`, `approvalAuthor`, `approvalNote`, `cause`, `approvalPIC`, `confirmationNote`, `confirmator`, `countermeasure`, `findingDate`, `founderAuthor`, `founderPIC`, `handlingAuthor`, `handlingNote`, `handlingOfProduct`, `handlingOfTool`, `handlingPIC`, `lastCalibrationDate`, `place`, `regNumber`, `reportType`, `toolId`, `toolName`, `userDiv`) VALUES
 (3, 'tettest', '', '', 'tests', '', '', '', 'test', '2025-04-09', '', 'system', '', '', '', '', '', '2024-10-25', 'Inspection', 'CAL-001', 'Daily Finding', 4, 'Digital Caliper', 'Production'),
-(4, 'test', '', '', 'test', '', '', '', 'test', '2025-04-09', '', 'system', '', '', '', '', '', '2024-10-25', 'Hydrolik Press 1', 'SPI-BAL 1', 'Daily Finding', 5, 'Balance Dickson', 'Production');
+(4, 'test', '', '', 'test', '', '', '', 'test', '2025-04-09', '', 'system', '', '', '', '', '', '2024-10-25', 'Hydrolik Press 1', 'SPI-BAL 1', 'Daily Finding', 5, 'Balance Dickson', 'Production'),
+(5, 'test error', '', '', 'teuing kunaon', '', '', '', 'teuing dikumahakeun', '2025-06-13', '', 'system', '', '', '', '', '', '2024-10-25', 'Inspection', 'CAL-001', 'Daily Finding', 4, 'Digital Caliper', 'Production');
 
 -- --------------------------------------------------------
 
@@ -275,7 +298,9 @@ INSERT INTO `t_dailyinspection` (`insId`, `toolId`, `instData`, `checker`, `chec
 (15, 4, 'H4sIAAAAAAAACtXVTW/aQBAG4L8ymkNPVkWBkJRL1SiXFKkc0vbQmMPgHa2XXS/WfrRNEf+9sgEL49JcYtreWFvLO++D1zxusFwrGz7GYskOp/gGE8xyzvS92K/q+w/BKStxivMYvBIMH+i7xwQLDvlaeJw+btAHsoJctW+ToqWCU5ymWFDI8t3+FJMUyckUp48pzmcpLrbNl+wCB826iXxfkqYc9NoK5RUcTwBBCdKwZKfJUYAkCA2GMw6QgIue9DtM0LGPJnx6Kvm3lWZk1NKRV4c7DUY1zDcysdo3n2GCqygkF2zD7sJ2sU1OAYctwGEn7d726Td8lu8o/1TvFTR8f0tv1NIbddLuuAw53JLrwW70rF2T/g/KjVty466c8qWhJ/hsVegBb3wWj6zUBCUJArGfIVoVQFBJAQK7JWUEKzbkL4521UKbdNK+slvD3CmpbA9mV2fNVkoT/KzC13U4CBVYk4WCbbSrqKvPO9gUByl2eS9OOWlRXnfSHjQZgi/srOI+Tu/kLOYtSUUWWgPsnz6hJPtqxVaSBUM2I3dxukGL7uaPaS/Ndt1lo9ewl6ufqjslVSADGRlVsqtObEY2xAJ8UJmurpCVkgzow5wQDVkJ/UImLwNw0wVYNgCHZpZ/hKN6tcuhfUFe5dVfgSEd/4/Ob7uds6bzodfpr7nrGUPMQZBtDlD99t6fn/ol3jPBYrv4BXEvJUm1CgAA', 'system', '2025-05-11', 'OK'),
 (16, 4, 'H4sIAAAAAAAACtXVTW/aQBAG4L8ymkNPVkWBkJRL1SiXFKkc0vbQmMPgHa2XXS/WfrRNEf+9sgEL49JcYtreWFvLO++D1zxusFwrGz7GYskOp/gGE8xyzvS92K/q+w/BKStxivMYvBIMH+i7xwQLDvlaeJw+btAHsoJctW+ToqWCU5ymWFDI8t3+FJMUyckUp48pzmcpLrbNl+wCB826iXxfkqYc9NoK5RUcTwBBCdKwZKfJUYAkCA2GMw6QgIue9DtM0LGPJnx6Kvm3lWZk1NKRV4c7DUY1zDcysdo3n2GCqygkF2zD7sJ2sU1OAYctwGEn7d726Td8lu8o/1TvFTR8f0tv1NIbddLuuAw53JLrwW70rF2T/g/KjVty466c8qWhJ/hsVegBb3wWj6zUBCUJArGfIVoVQFBJAQK7JWUEKzbkL4521UKbdNK+slvD3CmpbA9mV2fNVkoT/KzC13U4CBVYk4WCbbSrqKvPO9gUByl2eS9OOWlRXnfSHjQZgi/srOI+Tu/kLOYtSUUWWgPsnz6hJPtqxVaSBUM2I3dxukGL7uaPaS/Ndt1lo9ewl6ufqjslVSADGRlVsqtObEY2xAJ8UJmurpCVkgzow5wQDVkJ/UImLwNw0wVYNgCHZpZ/hKN6tcuhfUFe5dVfgSEd/4/Ob7uds6bzodfpr7nrGUPMQZBtDlD99t6fn/ol3jPBYrv4BXEvJUm1CgAA', 'system', '2025-06-12', 'OK'),
 (17, 5, 'H4sIAAAAAAAAClOKjlUCAAUb45EEAAAA', 'system', '2025-06-12', 'NOT USED'),
-(18, 4, 'H4sIAAAAAAAACtXVTW/aQBAG4L8ymkNPVkWBkJRL1ChSlCLBIW0PxRwG78hedr1Y+9E2jfjvlQ1YGIemB4zUm9er9TvzeNeev2CxlsZPQ75ki2P8gBEmGSfqUexG1fyTt9KkOMZZ8E4Khs/002GEOftsLRyO5y/oPBlBtlz3EqOhnGMcx5iTT7Lt+hijGMmmMY7nMc4mMS429UO2gb16XEd+KkhRBmpthHQSDisALwUpWLJVZMlD5IUCzQl7iMAGR+oWI7TsgvZfngt+taUJabm05OR+psYoi/lBOpTrZhOMcBVEyjkbv72xWWyiY8B+A7DfSns0Xfr13+Q7yD/Wewc137n1pg9HetOHV/UGDb1BK+2eC5/BHdkO7AZv2tXpF5T71303bMgN23LSFZqe4auRvgO84Uk8MqkiKEgQiF0NwUgPggry4NkuKSFYsSZ3cbSrBtqolfad7RpmVqbSdGB2ddJsJRXB7zJ8XYWDkJ4VGcjZBLMKqrzewsbYi7HNe3HKUYPyupX2pEgTfGNrJHdxekcnMe8olWSgUcBu9wmZsitHbFIyoMkkZC9O12vQ3fw17dxs1202eg87uWpX3ctUetKQkJYF2/LEJmR8yMF5majyDpk0JQ1qXycETSaFbiGj8wDctAGWNcC+M8O//EF7lcu++5yczMpfgSYV/o+eP7Z7Tuqe930dv81tn8GHDASZ+gBVX+/d+ak+4h0TLDaLP1MwnOe1CgAA', 'system', '2025-06-11', 'NG');
+(18, 4, 'H4sIAAAAAAAACtXVTW/aQBAG4L8ymkNPVkWBkJRL1ChSlCLBIW0PxRwG78hedr1Y+9E2jfjvlQ1YGIemB4zUm9er9TvzeNeev2CxlsZPQ75ki2P8gBEmGSfqUexG1fyTt9KkOMZZ8E4Khs/002GEOftsLRyO5y/oPBlBtlz3EqOhnGMcx5iTT7Lt+hijGMmmMY7nMc4mMS429UO2gb16XEd+KkhRBmpthHQSDisALwUpWLJVZMlD5IUCzQl7iMAGR+oWI7TsgvZfngt+taUJabm05OR+psYoi/lBOpTrZhOMcBVEyjkbv72xWWyiY8B+A7DfSns0Xfr13+Q7yD/Wewc137n1pg9HetOHV/UGDb1BK+2eC5/BHdkO7AZv2tXpF5T71303bMgN23LSFZqe4auRvgO84Uk8MqkiKEgQiF0NwUgPggry4NkuKSFYsSZ3cbSrBtqolfad7RpmVqbSdGB2ddJsJRXB7zJ8XYWDkJ4VGcjZBLMKqrzewsbYi7HNe3HKUYPyupX2pEgTfGNrJHdxekcnMe8olWSgUcBu9wmZsitHbFIyoMkkZC9O12vQ3fw17dxs1202eg87uWpX3ctUetKQkJYF2/LEJmR8yMF5majyDpk0JQ1qXycETSaFbiGj8wDctAGWNcC+M8O//EF7lcu++5yczMpfgSYV/o+eP7Z7Tuqe930dv81tn8GHDASZ+gBVX+/d+ak+4h0TLDaLP1MwnOe1CgAA', 'system', '2025-06-11', 'NG'),
+(19, 4, 'H4sIAAAAAAAACtXVTW/aQBAG4L8ymkNPVkWBkJRL1ChSlCLBIW0PxRwG78hedr1Y+9E2Rfz3ygYsjENzial683q1fmce79rzDRZrafw05Eu2OMYPGGGScaIexX5UzT95K02KY5wF76Rg+Ew/HUaYs8/WwuF4vkHnyQiy5bpNjIZyjnEcY04+yXbrY4xiJJvGOJ7HOJvEuNjWD9kF9upxHfmpIEUZqLUR0kk4rgC8FKRgyVaRJQ+RFwo0J+whAhscqVuM0LIL2n95LvjFliak5dKSk4eZGqMs5gfpUK6bTTDCVRAp52z87sZ2sY1OAfsNwH4r7dF06dd/le8o/1TvHdR8/0pv0NAbtNLuufAZ3JHtwG7wql2dfkG56cOJ3PThRblhQ27YlpOu0PQMX430HeANz+KRSRVBQYJA7GsIRnoQVJAHz3ZJCcGKNbmLb7erBtqolfad7RpmVqbSdGB2ddZsJRXB7zJ8XYWDkJ4VGcjZBLMKqrzewcbYi7HNe3HKUYPyupX2pEgTfGNrJHdxekdnMe8olWSgUcB+9wmZsitHbFIyoMkkZC9O12vQ3fw17a3Zrtts9B72ctWuupep9KQhIS0LtuWJTcj4kIPzMlHlHTJpShrUoU4ImkwK3UJGbwNw0wZY1gCHzgz/8kftVS6H7nNyMit/BZpU+D96/tjuOal7PvR1+jZ3fQYfMhBk6gNUfb3356f6iHdMsNgu/gCTqKUjtQoAAA==', 'system', '2025-06-13', 'NG'),
+(20, 5, 'H4sIAAAAAAAACtVWy27TQBT9lau7opKFkjQtOBsEO5SKIqjEos7i2HOxJx6PrfEYCFV/hT/hm/iFynZScA1RhZpK3dnzuOeehz1zecVVqa1/1xSxOF7wlANOMknyt4oXHHLQz3/0TtuUF/weVgyVlTjUmgMuxGelqnlxecW1h1Vw7cariC0KiXgRcQGfZH2BiIOI4dKIF5cRny8jXl3fFukQp9Pb91tMPKfXFXJkVHXoBWqdkRcXI8ErDthJ3Rh/salky2DY8xJGx9t+h2wnHPAXmKbdd77kgNeNSqUQ6/uB6+CBWM3GrOI7rGJxnxub1vqwjFYtp+Ge2cDz6WQEd5YoUrquDDaHsPx4n+UmUeS1Qk556Uv3NOye77O7ZVSI3cCAasBTVX4VR6V9dOOPh8aP4d7AwCZCMWo5hPMnY522IhWyBnldxLAp7OMl4C8qzYcqzUZwF2URl4a+iysPIdLpP0XafpNtmhq7bvIcliZ9pnzfk9Jecjx+sk6Gmh2P4D6JTjNP3Zr7iWa72h9gUxmKFs5n3cB00j6M5Hsxlu9MPDqxYljVGJouU3oWhrP0iCqoP3IXUIXa63ZpJS4WBViy2kATct/A0AY2bY8iLw6kpAtrv6CrtAWAgkFGtnQFdnDz2a+fP9qe06O77sz/050wDO9nz+nQnv14Dx7ol/v+9x42TWHIyjdP+a6NXs3a6yQXt70AxOIM8oaexpEQ7jsSdsR+821MG6yeaOObjBQsKVTwpHR779mFbS0G9YE1WF2vbgBOR7tXKQoAAA==', 'system', '2025-06-13', 'OK');
 
 -- --------------------------------------------------------
 
@@ -302,7 +327,8 @@ INSERT INTO `t_monthlyinspection` (`insId`, `toolId`, `month`, `checkerId`, `che
 (5, 5, '2025-02', 'system', '2025-04-12'),
 (6, 4, '2025-05', 'system', '2025-05-11'),
 (7, 5, '2025-05', 'system', '2025-05-11'),
-(8, 4, '2025-06', 'system', '2025-06-12');
+(8, 4, '2025-06', 'system', '2025-06-12'),
+(9, 5, '2025-06', 'system', '2025-06-13');
 
 -- --------------------------------------------------------
 
@@ -376,7 +402,7 @@ CREATE TABLE `t_roles` (
 --
 
 INSERT INTO `t_roles` (`roleId`, `roleName`, `dashboardPage`) VALUES
-(1, 'administrator', '/home/list'),
+(1, 'administrator', '/home/daily'),
 (5, 'Operator', '/home/daily'),
 (6, 'SPV', '/home/weekly'),
 (7, 'MANAGER', '/home/monthly');
@@ -481,6 +507,12 @@ INSERT INTO `t_weeklyinspection` (`inspectionId`, `weekCode`, `toolId`, `checker
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indeks untuk tabel `access`
+--
+ALTER TABLE `access`
+  ADD PRIMARY KEY (`code`);
 
 --
 -- Indeks untuk tabel `config`
@@ -612,7 +644,7 @@ ALTER TABLE `tooldata`
 -- AUTO_INCREMENT untuk tabel `t_abnormalreports`
 --
 ALTER TABLE `t_abnormalreports`
-  MODIFY `reportId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `reportId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT untuk tabel `t_checkmethod`
@@ -630,13 +662,13 @@ ALTER TABLE `t_collumns`
 -- AUTO_INCREMENT untuk tabel `t_dailyinspection`
 --
 ALTER TABLE `t_dailyinspection`
-  MODIFY `insId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `insId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT untuk tabel `t_monthlyinspection`
 --
 ALTER TABLE `t_monthlyinspection`
-  MODIFY `insId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `insId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT untuk tabel `t_pointcheck`

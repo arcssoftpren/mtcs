@@ -26,7 +26,7 @@
             }
           "
         >
-          <v-icon color="primary">mdi-view-dashboard</v-icon>
+          <v-img height="40" width="40" src="@/assets/softpren.png"></v-img>
         </v-btn>
       </template>
     </v-app-bar>
@@ -63,7 +63,11 @@
     <v-navigation-drawer location="left" v-model="menuDrawer" temporary="">
       <v-list>
         <v-list-item>
-          <v-divider><v-icon>mdi-view-dashboard</v-icon> OPTIONS</v-divider>
+          <div class="text-h6 text-capitalize">
+            {{ mydata.nama.toLocaleLowerCase() }}
+          </div>
+          <div class="text-capitalize">{{ mydata.department }}</div>
+          <v-divider></v-divider>
         </v-list-item>
         <FiturMenu />
       </v-list>
@@ -127,12 +131,25 @@ import ConfigMenus from "@/components/menus/configMenus.vue";
 import FiturMenu from "@/components/menus/fiturMenu.vue";
 import router from "@/router";
 import { useAppStore } from "@/store/app";
-import { nextTick, ref } from "vue";
+import { nextTick, onBeforeMount, reactive, ref } from "vue";
 
 const settingsDrawer = ref(false);
 const logoutDialog = ref(false);
 const store = useAppStore();
 const menuDrawer = ref(false);
+const mydata = reactive({
+  nama: "",
+  department: "",
+});
+
+onBeforeMount(() => {
+  store
+    .ajax({ sessionId: useAppStore().sessionId }, "auth/getmydata", "post")
+    .then((e) => {
+      mydata.nama = e.userName;
+      mydata.department = e.divName;
+    });
+});
 
 const logout = async () => {
   store.sessionId = "";

@@ -1,22 +1,76 @@
 // Utilities
-import { defineStore } from 'pinia'
-import $ from "jquery";
+import { defineStore } from "pinia";
+import $, { post } from "jquery";
 import Swal from "sweetalert2";
 
-export const useAppStore = defineStore('app', {
+export const useAppStore = defineStore("app", {
   persist: {
-    pick: ['sessionId']
+    pick: ["sessionId", "features", "configs", "setups", "cc", "ss"],
   },
   state: () => ({
     //
+    configs: [
+      {
+        label: "Roles Manager",
+        subtitle: "Manage roles in the system.",
+        icon: "mdi-shield-account",
+        key: "roleManager",
+      },
+      {
+        label: "Accounts Manager",
+        subtitle: "Manage users in the system.",
+        icon: "mdi-account-multiple",
+        key: "accountManager",
+      },
+      {
+        label: "Departments Manager",
+        subtitle: "Manage Department in the system.",
+        icon: "mdi-family-tree",
+        key: "divisionManager",
+      },
+
+      {
+        label: "Access Manager",
+        subtitle: "Manage access right in the system.",
+        icon: "mdi-security",
+        key: "accessManager",
+      },
+    ],
+
+    setups: [
+      {
+        label: "Tool Rank Setup",
+        subtitle: "Setting up ranks.",
+        icon: "mdi-chevron-triple-up",
+        key: "rankManager",
+      },
+      {
+        label: "Tool Type Setup",
+        subtitle: "Setting up tool types.",
+        icon: "mdi-wrench-cog",
+        key: "typeManager",
+      },
+      {
+        label: "Tools Setup",
+        subtitle: "Setting up tools.",
+        icon: "mdi-tools",
+        key: "toolManager",
+      },
+    ],
+
+    cc: [],
+    ss: [],
     cachedImage: "",
     sessionId: "",
     preload: false,
-    apiserver: `${import.meta.env.VITE_API_SERVER}/`,
+    apiserver: `${import.meta.env.VITE_API_SERVER}:${
+      import.meta.env.VITE_API_PORT
+    }/`,
     pdfdata: {
-      element: '',
-      data: null
+      element: "",
+      data: null,
     },
+    features: [],
     alert: Swal.mixin({
       toast: true,
       position: "top-end",
@@ -35,28 +89,25 @@ export const useAppStore = defineStore('app', {
   actions: {
     togglePreload() {
       setTimeout(() => {
-        this.preload = false
+        this.preload = false;
       }, 1000);
     },
     ajax(data, url, methode, isFile = false) {
       return new Promise((resolve, reject) => {
         $.ajax({
-          beforeSend: () => {
-            this.preload = true
-          },
           type: methode,
           url: this.apiserver + url,
           data: data,
           dataType: isFile ? undefined : "JSON", // Jangan pakai JSON jika upload file
           processData: !(data instanceof FormData), // Jangan proses FormData
-          contentType: !(data instanceof FormData) ? "application/x-www-form-urlencoded; charset=UTF-8" : false, // Jangan set contentType jika FormData
+          contentType: !(data instanceof FormData)
+            ? "application/x-www-form-urlencoded; charset=UTF-8"
+            : false, // Jangan set contentType jika FormData
           success: function (response) {
             resolve(response);
-            useAppStore().preload = false
           },
           error: (error) => {
             reject(error.responseJSON);
-            useAppStore().preload = false
           },
         });
       });
@@ -95,7 +146,6 @@ export const useAppStore = defineStore('app', {
         includes: (...values) => values.includes(value), // Cek apakah termasuk dalam array nilai tertentu
       };
       return validator[name] ? validator[name](...args) : false;
-    }
-
-  }
-})
+    },
+  },
+});

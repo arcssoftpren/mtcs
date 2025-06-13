@@ -49,6 +49,11 @@
                           {{ getDailyData(day, item.dailyData, method).text }}
                         </v-chip>
                         <v-badge
+                          @click="
+                            reportInit(
+                              getDailyData(day, item.dailyData, method).report
+                            )
+                          "
                           v-if="
                             getDailyData(day, item.dailyData, method).report &&
                             getDailyData(day, item.dailyData, method)
@@ -163,11 +168,82 @@
       </v-card-text>
     </v-card>
   </v-dialog>
+  <v-dialog
+    v-model="reportDialog"
+    scrollable
+    persistent
+    :overlay="false"
+    transition="dialog-transition"
+  >
+    <v-card title="Abnormal Report">
+      <template v-slot:append>
+        <v-btn flat icon @click="reportDialog = false">
+          <v-icon>mdi-close</v-icon>
+        </v-btn>
+      </template>
+      <v-card-text>
+        <v-table>
+          <thead>
+            <tr>
+              <th>Nama Tool</th>
+              <th>:</th>
+              <th>{{ report.toolName }}</th>
+              <th>Nomor Registrasi</th>
+              <th>:</th>
+              <th>{{ report.regNumber }}</th>
+            </tr>
+            <tr>
+              <th>Tanggal Temuan</th>
+              <th>:</th>
+              <th>{{ moment(report.findingDate).format("DD/MM/YYYY") }}</th>
+
+              <th>User</th>
+              <th>:</th>
+              <th>{{ report.userDiv }}</th>
+            </tr>
+
+            <tr>
+              <th>Temuan Abnormal</th>
+              <th>:</th>
+              <th colspan="4">{{ report.abnormalDetail }}</th>
+            </tr>
+            <tr>
+              <th>Penyebab</th>
+              <th>:</th>
+              <th colspan="4">{{ report.cause }}</th>
+            </tr>
+            <tr>
+              <th>Penanggulangan</th>
+              <th>:</th>
+              <th colspan="4">{{ report.countermeasure }}</th>
+            </tr>
+          </thead>
+        </v-table>
+      </v-card-text>
+    </v-card>
+  </v-dialog>
 </template>
 <script setup>
 import { useAppStore } from "@/store/app";
 import moment from "moment";
 import { onMounted, reactive, ref } from "vue";
+
+const report = ref(null);
+const reportDialog = ref(false);
+
+const reportInit = async (data) => {
+  try {
+    report.value = await store.ajax(
+      { id: data },
+      "tool/inidvidualreport",
+      "post"
+    );
+    reportDialog.value = true;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 const props = defineProps([
   "weeklyData",
   "toolId",

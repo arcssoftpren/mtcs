@@ -2,6 +2,7 @@ const crud = require("../helpers/crud");
 const crypter = require("../helpers/crypter");
 const path = require("path"); // Untuk membangun path file secara aman
 const fs = require("fs");
+const Crud = require("../helpers/crud");
 module.exports = {
   login: async (req, res) => {
     try {
@@ -270,7 +271,10 @@ module.exports = {
     const { userName, userId } = decrypted;
 
     const db = new crud();
-    const response = await db.where("userId", "=", userId).get("t_user");
+    const response = await db
+      .where("userId", "=", userId)
+      .join("left", "division", "division.divId", "t_user.divId")
+      .get("t_user");
 
     return res.status(200).json(response[0]);
   },
@@ -296,6 +300,63 @@ module.exports = {
       await db.insert("division", { divName });
 
       return res.status(200).json({ message: "success" });
+    } catch (error) {
+      console.log(error);
+      return res.status(404).json(error);
+    }
+  },
+  getaccess: async (req, res) => {
+    try {
+      const code = req.body.code;
+      const db = new Crud();
+
+      const existed = await db.where("code", "=", code).get("access");
+
+      let dataresponse = {
+        access: [],
+        configs: [],
+        setups: [],
+      };
+
+      if (existed.length < 1) {
+        return res.status(200).json(dataresponse);
+      } else {
+        const result = JSON.parse(existed[0].rights);
+
+        dataresponse.access = result;
+        dataresponse.configs = JSON.parse(existed[0].configs);
+        dataresponse.setups = JSON.parse(existed[0].setups);
+        return res.status(200).json(dataresponse);
+      }
+    } catch (error) {
+      console.log(error);
+      return res.status(404).json(error);
+    }
+  },
+
+  setaccess: async (req, res) => {
+    try {
+      const db = new Crud();
+      const data = req.body;
+      const { rights, code, configs, setups } = data;
+
+      const existed = await db.where("code", "=", code).get("access");
+      if (existed.length < 1) {
+        await db.insert("access", {
+          rights: JSON.stringify(rights),
+          code,
+          configs: JSON.stringify(configs),
+          setups: JSON.stringify(setups),
+        });
+        return res.status(200).json({ success: "success" });
+      } else {
+        await db.where("code", "=", code).update("access", {
+          rights: JSON.stringify(rights),
+          configs: JSON.stringify(configs),
+          setups: JSON.stringify(setups),
+        });
+        return res.status(200).json({ success: "success" });
+      }
     } catch (error) {
       console.log(error);
       return res.status(404).json(error);

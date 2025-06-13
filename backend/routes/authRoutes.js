@@ -20,5 +20,7 @@ router.post('/adddiv', controller.addDiv)
 router.post('/deletediv', controller.deleteDiv)
 router.post('/getconfig', controller.getConfigs)
 router.post('/setconfig', controller.setconfig)
+router.post('/getaccess', controller.getaccess)
+router.post('/setaccess', controller.setaccess)
 
 module.exports = router

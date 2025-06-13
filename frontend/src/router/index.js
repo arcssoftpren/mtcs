@@ -22,11 +22,11 @@ const routes = [
     path: "/home",
     component: () => import("@/layouts/mainLayout.vue"),
     children: [
-      {
-        path: "/home/list",
-        name: "Tool Control List",
-        component: () => import("@/views/pages/controlList.vue"),
-      },
+      // {
+      //   path: "/home/list",
+      //   name: "Tool Control List",
+      //   component: () => import("@/views/pages/controlList.vue"),
+      // },
       {
         path: "/home/daily",
         name: "Daily Control",
@@ -42,11 +42,11 @@ const routes = [
         name: "Monthly Control",
         component: () => import("@/views/features/monthlyInspection.vue"),
       },
-      {
-        path: "/home/abnormalityReport",
-        name: "Abnormality Report",
-        component: () => import("@/views/features/abnormalReport.vue"),
-      },
+      // {
+      //   path: "/home/abnormalityReport",
+      //   name: "Abnormality Report",
+      //   component: () => import("@/views/features/abnormalReport.vue"),
+      // },
     ],
   },
 ];
@@ -81,6 +81,26 @@ router.beforeEach(async (e) => {
         router.push(home);
         return;
       }
+
+      useAppStore()
+        .ajax({ sessionId: useAppStore().sessionId }, "auth/getmydata", "post")
+        .then((e) => {
+          const accesscode = `${e.divId}-${e.roleId}`;
+          useAppStore()
+            .ajax({ code: accesscode }, "auth/getaccess", "post")
+            .then((e) => {
+              useAppStore().features = e.access;
+              useAppStore().cc = e.configs;
+              useAppStore().ss = e.setups;
+              if (!e.access.includes(path)) {
+                useAppStore()
+                  .ajax({ sessionId }, "auth/gethome", "post")
+                  .then((home) => {
+                    router.push(home);
+                  });
+              }
+            });
+        });
     }
   }
 });

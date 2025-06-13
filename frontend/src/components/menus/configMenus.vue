@@ -1,6 +1,7 @@
 <template>
   <v-list nav>
     <v-list-item
+      v-show="useAppStore().cc.includes(item.key)"
       v-for="item in configs"
       :key="item.key"
       :title="item.label"
@@ -17,6 +18,7 @@
     </v-list-item>
 
     <v-list-item
+      v-show="useAppStore().ss.includes(item.key)"
       v-for="item in setups"
       :key="item.key"
       :title="item.label"
@@ -85,6 +87,14 @@
       "
       v-if="config == 'divisionManager'"
     ></DivisionManager>
+    <AccessManager
+      :close-dialog="
+        () => {
+          configDialog = false;
+        }
+      "
+      v-if="config == 'accessManager'"
+    ></AccessManager>
   </v-dialog>
 </template>
 <script setup>
@@ -95,50 +105,13 @@ import RankManager from "../dialogs/rankManager.vue";
 import TypeManager from "../dialogs/typeManager.vue";
 import ToolsManager from "../dialogs/toolsManager.vue";
 import DivisionManager from "../dialogs/divisionManager.vue";
+import AccessManager from "../dialogs/accessManager.vue";
+import { useAppStore } from "@/store/app";
 
 const configDialog = ref(false);
 const config = ref(null);
-const configs = [
-  {
-    label: "ROLES MANAGER",
-    subtitle: "Manage roles in the system.",
-    icon: "mdi-shield-account",
-    key: "roleManager",
-  },
-  {
-    label: "ACCOUNTS MANAGER",
-    subtitle: "Manage users in the system.",
-    icon: "mdi-account-multiple",
-    key: "accountManager",
-  },
-  {
-    label: "DEPARTMENTS MANAGER",
-    subtitle: "Manage Department in the system.",
-    icon: "mdi-family-tree",
-    key: "divisionManager",
-  },
-];
-
-const setups = [
-  {
-    label: "TOOL RANK SETUP",
-    subtitle: "Setting up ranks.",
-    icon: "mdi-chevron-triple-up",
-    key: "rankManager",
-  },
-  {
-    label: "TOOL TYPE SETUP",
-    subtitle: "Setting up tool types.",
-    icon: "mdi-wrench-cog",
-    key: "typeManager",
-  },
-  {
-    label: "TOOLS SETUP",
-    subtitle: "Setting up tools.",
-    icon: "mdi-tools",
-    key: "toolManager",
-  },
-];
+const configs = useAppStore().configs;
+const setups = useAppStore().setups;
 
 const configOpen = (key) => {
   config.value = key;

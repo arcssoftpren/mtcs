@@ -3,6 +3,7 @@ const crypter = require("../helpers/crypter");
 const path = require("path"); // Untuk membangun path file secara aman
 const fs = require("fs");
 const moment = require("moment");
+const Crud = require("../helpers/crud");
 
 module.exports = {
   getTools: async (req, res) => {
@@ -563,6 +564,21 @@ module.exports = {
         .get("t_abnormalreports");
 
       return res.status(200).json(abnormality);
+    } catch (error) {
+      console.log(error);
+      return res.status(400).json(error);
+    }
+  },
+
+  getindividualreport: async (req, res) => {
+    try {
+      const { id } = req.body;
+      const db = new Crud();
+      const reports = await db
+        .where("reportId", "=", id)
+        .get("t_abnormalreports");
+
+      return res.status(200).json(reports[0]);
     } catch (error) {
       console.log(error);
       return res.status(400).json(error);
